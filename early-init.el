@@ -25,4 +25,7 @@
 
 ;;; Code:
 
+;; We use straight.el to manage our packages. Disable package.el.
+(setq package-enable-at-startup nil)
+
 ;;; early-init.el ends here
