@@ -45,4 +45,9 @@
 (setq straight-use-package-by-default t)
 (require 'use-package)
 
+;; Init evil mode for Vim emulation in Emacs
+(use-package evil
+  :config
+  (evil-mode 1))
+
 ;;; init.el ends here
