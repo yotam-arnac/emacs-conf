@@ -45,6 +45,9 @@
 (setq straight-use-package-by-default t)
 (require 'use-package)
 
+;; Optionally, load personal settings
+(load (concat (file-name-directory load-file-name) "personal.el") t)
+
 ;; Init evil mode for Vim emulation in Emacs
 (use-package evil
   :config
