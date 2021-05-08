@@ -68,6 +68,8 @@
 ;; Init evil mode for Vim emulation in Emacs
 (use-package evil
   :init
+  ;; Needed for evil-collection
+  (setq evil-want-keybinding nil)
   ;; Undo
   (setq evil-undo-system 'undo-redo)
   (setq evil-want-fine-undo t)
@@ -81,6 +83,12 @@
   (setq evil-search-module 'evil-search)
   :config
   (evil-mode 1))
+
+;; Add evil key bindings to other, non-default, modes
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
 
 ;; Init magit for a better git user experience
 (use-package magit)
