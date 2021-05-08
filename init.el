@@ -82,6 +82,9 @@
   :config
   (evil-mode 1))
 
+;; Init magit for a better git user experience
+(use-package magit)
+
 ;; Init which-key for interactively displaying key bindings
 (use-package which-key
   :config
