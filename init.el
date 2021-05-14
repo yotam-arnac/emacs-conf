@@ -108,6 +108,9 @@
   :config
   (selectrum-mode +1))
 
+;; Init consult for enhanced search commands
+(use-package consult)
+
 ;; Init magit for a better git user experience
 (use-package magit)
 
