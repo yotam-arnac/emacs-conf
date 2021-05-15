@@ -109,7 +109,13 @@
   (selectrum-mode +1))
 
 ;; Init consult for enhanced search commands
-(use-package consult)
+(use-package consult
+  :config
+  ;; Configure project detection using project.el
+  (setq consult-project-root-function
+        (lambda ()
+          (when-let (project (project-current))
+            (car (project-roots project))))))
 
 ;; Init magit for a better git user experience
 (use-package magit)
