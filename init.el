@@ -272,6 +272,11 @@ DIR must include a .project file to be considered a project."
   :config
   (which-key-mode))
 
+;; Init rainbow-delimiters for highlighting parens by their depth
+(use-package rainbow-delimiters
+  :hook
+  (prog-mode . rainbow-delimiters-mode))
+
 ;; Init evil-nerd-commenter for comment editing
 (use-package evil-nerd-commenter
   :after evil
