@@ -302,6 +302,9 @@ DIR must include a .project file to be considered a project."
 (tool-bar-mode -1)
 (toggle-scroll-bar -1)
 
+;; Inhibit the splash screen
+(setq inhibit-splash-screen t)
+
 ;; Enable window management
 (winner-mode 1)
 
