@@ -374,6 +374,9 @@ DIR must include a .project file to be considered a project."
 ;; Show cursor's column number
 (setq column-number-mode t)
 
+;; Remove average load time indicator from the modeline
+(setq display-time-default-load-average nil)
+
 ;; Show time in the modeline
 (display-time-mode 1)
 
