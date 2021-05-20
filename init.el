@@ -374,4 +374,7 @@ DIR must include a .project file to be considered a project."
 ;; Show cursor's column number
 (setq column-number-mode t)
 
+;; Show time in the modeline
+(display-time-mode 1)
+
 ;;; init.el ends here
