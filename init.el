@@ -407,6 +407,11 @@ DIR must include a .project file to be considered a project."
 ;; Show time in the modeline
 (display-time-mode 1)
 
+;; Show trailing whitespaces in code
+(require 'whitespace)
+(setq whitespace-style '(face trailing))
+(add-hook 'prog-mode-hook 'whitespace-mode)
+
 ;; Set customization file path
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
