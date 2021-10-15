@@ -95,7 +95,8 @@
  :prefix mo-quick-menu-prefix
  :non-normal-prefix mo-quick-menu-nn-prefix
  :prefix-map 'mo-quick-menu-map
- :which-key "Quick menu prefix key")
+ :which-key "Quick menu prefix key"
+ "c" '(:which-key "Code"))
 
 (general-def "C-c i" #'ibuffer)
 
@@ -347,10 +348,10 @@ DIR must include a .project file to be considered a project."
   ("M-g o" #'consult-outline)
   ("M-g m" #'consult-mark)
   ("M-g k" #'consult-global-mark)
-  ("M-g i" #'consult-imenu)
   (:keymaps 'mo-quick-menu-map
-   "m" #'consult-imenu)
-  ("M-g I" #'consult-project-imenu)
+   :prefix "c"
+   "i" #'consult-imenu
+   "I" #'consult-project-imenu)
   ;; M-s bindings (search-map)
   ("M-s f" #'consult-fd)
   ("M-s L" #'consult-locate)
@@ -430,6 +431,7 @@ DIR must include a .project file to be considered a project."
 (use-package consult-flycheck
   :general
   (:keymaps 'mo-quick-menu-map
+   :prefix "c"
    "f" #'consult-flycheck))
 
 ;; Init marginalia for minibuffer result annotations
@@ -563,10 +565,11 @@ DIR must include a .project file to be considered a project."
   (:keymaps 'lsp-mode-map
    "C-c l" '(:keymap lsp-command-map :which-key "lsp"))
   (:keymaps 'mo-quick-menu-map
+   :prefix "c"
    "i" #'lsp-find-implementation
    "a" #'lsp-execute-code-action
-   "R" #'lsp-rename
-   "S" #'lsp-clangd-find-other-file)
+   "r" #'lsp-rename
+   "o" #'lsp-clangd-find-other-file)
   :init
   ;; Set a high read output max value for handling large language server responses
   (setq read-process-output-max (* 10 1024 1024))
@@ -632,7 +635,8 @@ run the attached function (if exists) and enable lsp"
   :after lsp-mode
   :general
   (:keymaps 'mo-quick-menu-map
-   "D" #'lsp-ui-doc-show)
+   :prefix "c"
+   "d" #'lsp-ui-doc-show)
   :config
   ;; Do not show documentation automatically
   (setq lsp-ui-doc-show-with-cursor nil)
@@ -643,9 +647,10 @@ run the attached function (if exists) and enable lsp"
 (use-package lsp-treemacs
   :general
   (:keymaps 'mo-quick-menu-map
+   :prefix "c"
    "h" #'lsp-treemacs-call-hierarchy
    "H" #'lsp-treemacs-type-hierarchy
-   "M" #'lsp-treemacs-symbols
+   "S" #'lsp-treemacs-symbols
    "F" #'lsp-treemacs-errors-list))
 
 ;; Init dap-mode for interactive debugging
@@ -654,6 +659,7 @@ run the attached function (if exists) and enable lsp"
   :demand t
   :general
   (:keymaps 'mo-quick-menu-map
+   :prefix "c"
    "." #'dap-debug
    "," #'dap-hydra)
   :config
@@ -693,6 +699,7 @@ run the attached function (if exists) and enable lsp"
   :after (lsp-mode consult)
   :general
   (:keymaps 'mo-quick-menu-map
+   :prefix "c"
    "s" #'consult-lsp-symbols)
   :config
   ;; Manual preview key for symbols results
@@ -784,7 +791,9 @@ run the attached function (if exists) and enable lsp"
 ;; Init docker for managing docker from Emacs
 (use-package docker
   :general
-  ("C-c d" #'docker))
+  (:keymaps 'mo-quick-menu-map
+   :prefix "c"
+   "D" #'docker))
 
 ;; Init docker-tramp for supporting TRAMP in containers
 (use-package docker-tramp)
