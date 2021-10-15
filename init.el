@@ -100,6 +100,10 @@
 
 (general-def "C-c i" #'ibuffer)
 
+(mo-quick-menu-def
+  ";" #'xref-find-definitions
+  "'" #'xref-find-references)
+
 (defun mo-copy-file-path ()
   "Copy the full path of the current buffer's file."
   (interactive)
@@ -134,8 +138,6 @@
   ;; Set word movement to operate on symbol boundaries
   (defalias #'forward-evil-word #'forward-evil-symbol)
   (mo-quick-menu-def
-    "d" #'xref-find-definitions
-    "r" #'xref-find-references
     "C" #'mo-copy-file-path)
   (evil-mode 1))
 
@@ -566,10 +568,11 @@ DIR must include a .project file to be considered a project."
    "C-c l" '(:keymap lsp-command-map :which-key "lsp"))
   (:keymaps 'mo-quick-menu-map
    :prefix "c"
-   "i" #'lsp-find-implementation
    "a" #'lsp-execute-code-action
    "r" #'lsp-rename
    "o" #'lsp-clangd-find-other-file)
+  (:keymaps 'mo-quick-menu-map
+   "\"" #'lsp-find-implementation)
   :init
   ;; Set a high read output max value for handling large language server responses
   (setq read-process-output-max (* 10 1024 1024))
