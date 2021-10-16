@@ -97,6 +97,7 @@
  :prefix-map 'mo-quick-menu-map
  :which-key "Quick menu prefix key"
  "s" '(:which-key "Search")
+ "v" '(:which-key "View")
  "c" '(:which-key "Code")
  "n" '(:which-key "Notes"))
 
@@ -509,6 +510,7 @@ DIR must include a .project file to be considered a project."
 (use-package tab-bar-lost-commands
   :general
   (:keymaps 'mo-quick-menu-map
+   :prefix "v"
    "t" #'tab-bar-lost-commands-switch-to-or-create-tab
    "T" #'tab-bar-close-tab))
 
@@ -977,6 +979,7 @@ run the attached function (if exists) and enable lsp"
 (use-package desktop+
   :general
   (:keymaps 'mo-quick-menu-map
+   :prefix "v"
    "x" #'desktop+-load
    "X" #'desktop+-create)
   :commands desktop+-create
@@ -996,7 +999,9 @@ run the attached function (if exists) and enable lsp"
 ;; Init zoom-window for toggling window zoom
 (use-package zoom-window
   :general
-  (:states 'normal "C-w z" #'zoom-window-zoom)
+  (:keymaps 'mo-quick-menu-map
+   :prefix "v"
+   "z" #'zoom-window-zoom)
   :config
   (setq zoom-window-mode-line-color "#3b404e")
   (minions-mode 1))
