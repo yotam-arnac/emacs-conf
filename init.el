@@ -212,8 +212,16 @@
   (setq better-jumper-add-jump-behavior 'replace)
   (better-jumper-mode +1))
 
-;; Increase xref marker stack length
-(setq xref-marker-ring-length 100)
+;; Init xref for code reference lookup
+(use-package xref
+  :straight nil
+  :general
+  (:keymaps 'mo-quick-menu-map
+   ";" #'xref-find-definitions
+   "'" #'xref-find-references)
+  :config
+  ;; Increase xref marker stack length
+  (setq xref-marker-ring-length 100))
 
 ;; Init origami for text and code folding
 (use-package origami
