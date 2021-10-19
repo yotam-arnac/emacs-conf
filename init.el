@@ -1063,6 +1063,15 @@ run the attached function (if exists) and enable lsp"
   ("s-+" #'zoom-in/out)
   ("s-=" #'zoom-in/out))
 
+;; Init display-line-numbers for displaying line numbers
+(use-package display-line-numbers
+  :straight nil
+  :config
+  ;; Set relative line numbers
+  (setq display-line-numbers-type 'relative)
+  (setq display-line-numbers-current-absolute nil)
+  (global-display-line-numbers-mode 1))
+
 ;; Cleanup the frame UI
 (tool-bar-mode -1)
 (toggle-scroll-bar -1)
