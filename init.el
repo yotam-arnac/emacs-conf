@@ -1130,8 +1130,11 @@ run the attached function (if exists) and enable lsp"
 ;; Remove average load time indicator from the modeline
 (setq display-time-default-load-average nil)
 
-;; Show time in the modeline
-(display-time-mode 1)
+;; Init time for showing time in the modeline
+(use-package time
+  :straight nil
+  :config
+  (display-time-mode 1))
 
 ;; Truncate lines by default
 (setq truncate-lines t)
