@@ -1126,6 +1126,7 @@ run the attached function (if exists) and enable lsp"
 
 ;; Cleanup the frame UI
 (tool-bar-mode -1)
+(menu-bar-mode -1)
 (toggle-scroll-bar -1)
 
 ;; Disable cursor blink
