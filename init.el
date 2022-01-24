@@ -1176,9 +1176,6 @@ run the attached function (if exists) and enable lsp"
 (use-package display-line-numbers
   :straight nil
   :config
-  ;; Set relative line numbers
-  (setq display-line-numbers-type 'relative)
-  (setq display-line-numbers-current-absolute nil)
   (global-display-line-numbers-mode 1))
 
 ;; Cleanup the frame UI
