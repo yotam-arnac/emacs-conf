@@ -1091,6 +1091,10 @@ run the attached function (if exists) and enable lsp"
 ;; Set eshell cache directory
 (setq eshell-directory-name (file-name-as-directory (mo-cache-path "eshell")))
 
+;; Init all-the-icons for icon support
+(use-package all-the-icons
+  :if (display-graphic-p))
+
 ;; Init dashboard for an informative splash screen
 (use-package dashboard
   :config
