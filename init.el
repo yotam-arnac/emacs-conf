@@ -1235,7 +1235,14 @@ run the attached function (if exists) and enable lsp"
 ;; Enable winner-mode for window management
 (use-package winner
   :straight nil
+  :demand t
+  :general
+  (:keymaps 'mo-quick-menu-map
+   :prefix "w"
+   "<left>" #'winner-undo
+   "<right>" #'winner-redo)
   :config
+  (setq winner-dont-bind-my-keys t)
   (winner-mode 1))
 
 ;; Set the default initial frame size
