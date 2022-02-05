@@ -474,6 +474,9 @@ DIR must include a .project file to be considered a project."
    "M-e" #'consult-isearch)                 ;; orig. isearch-edit-string
   ("M-s e" #'consult-isearch)               ;; orig. isearch-edit-string
   ("M-s l" #'consult-line)                  ;; required by consult-line to detect isearch
+  (:keymaps 'mo-quick-menu-map
+   :prefix "b"
+   "b" #'consult-buffer)
 
   :config
   ;; Configure the narrowing key.
