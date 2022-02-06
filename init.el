@@ -1046,6 +1046,9 @@ run the attached function (if exists) and enable lsp"
   ("C-h C" #'helpful-command)
   (:keymaps 'mo-quick-menu-map
    :prefix "h"
+   "f" #'helpful-callable
+   "v" #'helpful-variable
+   "k" #'helpful-key
    "h" #'helpful-at-point))
 
 ;; Init google-this for quick Google searches from Emacs
