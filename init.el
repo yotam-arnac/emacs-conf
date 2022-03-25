@@ -670,7 +670,9 @@ DIR must include a .project file to be considered a project."
 
 ;; Init treemacs-icons-dired for having icons in dired mode
 (use-package treemacs-icons-dired
-  :after (treemacs dired))
+  :after (treemacs dired)
+  :config
+  (treemacs-icons-dired-mode))
 
 ;; Init treemacs-magit for treemacs and magit integration
 (use-package treemacs-magit
@@ -1174,7 +1176,6 @@ run the attached function (if exists) and enable lsp"
 
 ;; Init doom one theme
 (use-package doom-themes
-  :after treemacs-icons-dired
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
@@ -1185,9 +1186,7 @@ run the attached function (if exists) and enable lsp"
   ;; Distinguish between var reads and writes by underlining lsp write highlights
   (set-face-attribute 'lsp-face-highlight-write nil :underline t)
   ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config)
-  ;; Load icons here, so their background will be aligned with the theme
-  (treemacs-icons-dired-mode))
+  (doom-themes-org-config))
 
 ;; Init solaire-mode for visually highlighting file backed buffers
 (use-package solaire-mode
