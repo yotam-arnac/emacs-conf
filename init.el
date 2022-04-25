@@ -84,31 +84,6 @@
   :config
   (gcmh-mode 1))
 
-;; Init evil mode for Vim emulation in Emacs
-(use-package evil
-  :demand t
-  :init
-  ;; Needed for evil-collection
-  (setq evil-want-keybinding nil)
-  ;; Undo
-  (setq evil-undo-system 'undo-redo)
-  (setq evil-want-fine-undo t)
-  ;; Enable Emacs native bindings in insert mode
-  (setq evil-disable-insert-state-bindings t)
-  (setq evil-want-C-u-delete nil)
-  (setq evil-want-C-w-delete nil)
-  ;; Yanking
-  (setq evil-want-Y-yank-to-eol t)
-  ;; Use evil search instead of the native search module
-  (setq evil-search-module 'evil-search)
-  ;; Set word search to look for symbol boundaries
-  (setq evil-symbol-word-search t)
-  ;; Set end of line selection to not include the newline character
-  (setq evil-want-visual-char-semi-exclusive t)
-  :config
-  ;; Set word movement to operate on symbol boundaries
-  (defalias #'forward-evil-word #'forward-evil-symbol)
-  (evil-mode 1))
 
 ;; Prefix keys for quick action menu
 (setq mo-quick-menu-prefix "SPC")
@@ -136,14 +111,6 @@
  "g" '(:which-key "Git")
  "r" '(:which-key "Multiple Cursors")
  "n" '(:which-key "Notes"))
-
-;; Add evil shortcuts here, after the initialization of the quick menu map
-(when (featurep 'evil)
-  (mo-quick-menu-def
-    :prefix "w"
-    "v" #'evil-window-vsplit
-    "s" #'evil-window-split
-    "c" #'evil-window-delete))
 
 ;; Quick save key binding
 (mo-quick-menu-def
@@ -182,44 +149,10 @@
   :prefix "f"
   "f" #'find-file)
 
-;; Add evil key bindings to other, non-default, modes
-(use-package evil-collection
-  :after evil
-  :config
-  ;; We have our own find references key binding. Remove evil-collection's one.
-  ;; evil-collection's find usages overrides evil-mc key bindings.
-  (setq evil-collection-want-find-usages-bindings nil)
-  (evil-collection-init))
-
-;; Init evil-mc for supporting multiple cursors in evil mode
-(use-package evil-mc
-  :demand t
-  :general
-  (:keymaps 'evil-mc-cursors-map
-   "d" #'evil-mc-make-and-goto-next-match
-   "D" #'evil-mc-make-and-goto-prev-match)
-  (:keymaps 'mo-quick-menu-map
-   "r" '(:keymap evil-mc-cursors-map :package evil-mc))
-  :config
-  (global-evil-mc-mode))
-
-;; Init evil-surround for quickly adding paired surrounding characters
-(use-package evil-surround
-  :demand t
-  :general
-  (:states 'visual
-   "s" #'evil-surround-region)
-  :config
-  (global-evil-surround-mode 1))
-
 ;; Init anzu for showing additional search match info
 (use-package anzu
   :config
   (global-anzu-mode +1))
-
-;; Init evil-anzu for anzu integration with evil search
-(use-package evil-anzu
-  :after evil)
 
 ;; Init goggles for highlighting modified regions
 (use-package goggles
@@ -249,18 +182,9 @@ Ask for action even on single candidate jumps."
   (set-face-attribute 'avy-lead-face-2 nil :background "gold4")
   (setq avy-timeout-seconds 0.3))
 
-;; Init evil-snipe for an improved 1 char evil search experience
-(use-package evil-snipe
-  :config
-  (evil-snipe-override-mode 1))
-
 ;; Init better-jumper for better controlling the jump list logic
 (use-package better-jumper
   :demand t
-  :after evil
-  :general
-  ([remap evil-jump-forward] 'better-jumper-jump-forward)
-  ([remap evil-jump-backward] 'better-jumper-jump-backward)
   :config
   ;; Jump list to work as a stack
   (setq better-jumper-add-jump-behavior 'replace)
@@ -669,16 +593,6 @@ DIR must include a .project file to be considered a project."
   (treemacs-fringe-indicator-mode 'always)
   (treemacs-git-mode 'simple))
 
-;; Init treemacs-evil for treemacs and evil integration
-(use-package treemacs-evil
-  :after (treemacs evil))
-
-;; Init treemacs-icons-dired for having icons in dired mode
-(use-package treemacs-icons-dired
-  :after (treemacs dired)
-  :config
-  (treemacs-icons-dired-mode))
-
 ;; Init treemacs-magit for treemacs and magit integration
 (use-package treemacs-magit
   :after (treemacs magit))
@@ -771,6 +685,9 @@ DIR must include a .project file to be considered a project."
   :config
   (setq git-link-use-commit t))
 
+(use-package company-lsp
+  :defer t)
+
 ;; Init lsp mode for lsp support
 (use-package lsp-mode
   :general
@@ -795,6 +712,31 @@ DIR must include a .project file to be considered a project."
   (setq lsp-idle-delay 0.2)
   ;; Enable which-key help on the lsp prefix key
   (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-file-watch-ignored '(
+    "[/\\\\]\\.direnv$"
+    ; SCM tools
+    "[/\\\\]\\.git$"
+    "[/\\\\]\\.hg$"
+    "[/\\\\]\\.bzr$"
+    "[/\\\\]_darcs$"
+    "[/\\\\]\\.svn$"
+    "[/\\\\]_FOSSIL_$"
+    ; IDE tools
+    "[/\\\\]\\.idea$"
+    "[/\\\\]\\.ensime_cache$"
+    "[/\\\\]\\.eunit$"
+    "[/\\\\]node_modules$"
+    "[/\\\\]\\.fslckout$"
+    "[/\\\\]\\.tox$"
+    "[/\\\\]\\.stack-work$"
+    "[/\\\\]\\.bloop$"
+    "[/\\\\]\\.metals$"
+    "[/\\\\]target$"
+    ; Autotools output
+    "[/\\\\]\\.deps$"
+    "[/\\\\]build-aux$"
+    "[/\\\\]autom4te.cache$"
+    "[/\\\\]\\.reference$"))
   ;; Enable for the following modes
   (setq mo-lsp-enable-for-modes '(c-mode
                                   c++-mode
@@ -997,6 +939,8 @@ run the attached function (if exists) and enable lsp"
   ;; We don't use projectile
   (setq pipenv-with-projectile nil))
 
+(setq python-shell-interpreter "/opt/homebrew/bin/python3")
+
 ;; Init js2-mode for enhanced JavaScript editing
 (use-package js2-mode
   :mode "\\.js\\'")
@@ -1124,12 +1068,6 @@ run the attached function (if exists) and enable lsp"
 (use-package vi-tilde-fringe
   :hook
   (prog-mode . vi-tilde-fringe-mode))
-
-;; Init evil-nerd-commenter for comment editing
-(use-package evil-nerd-commenter
-  :after evil
-  :general
-  (:states '(normal, visual) "gc" #'evilnc-comment-operator))
 
 ;; A fast key binding for showing the next command's result in another window.
 ;; Make sure it also works when the command is using 'switch-to-buffer'.
@@ -1372,5 +1310,26 @@ run the attached function (if exists) and enable lsp"
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))
+
+(require 'ido)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode t)
+(global-set-key (kbd "M-RET") 'ido-switch-buffer)
+(global-set-key (kbd "<end>") 'move-end-of-line)
+(global-set-key (kbd "<home>") 'move-beginning-of-line)
+(global-set-key (kbd "C-`") 'other-window)
+(global-set-key (kbd "s-<down>") 'forward-sexp)
+(global-set-key (kbd "s-<up>") 'backward-sexp)
+(delete-selection-mode 1)
+
+(use-package nix-mode
+  :mode ("\\.nix\\'" "\\.nix.in\\'"))
+
+(use-package envrc
+  :init
+  :config
+  (envrc-global-mode))
+
 
 ;;; init.el ends here
